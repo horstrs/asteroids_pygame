@@ -17,6 +17,7 @@ def main():
                 return
         screen.fill(COLOR_BLACK)
         player.draw(screen)
+        player.update(delta_time)
         pygame.display.flip()
         delta_time = clock.tick(60) / 1000
 
