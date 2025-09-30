@@ -26,7 +26,7 @@ def main():
     clock = pygame.time.Clock()
     delta_time = 0
     
-    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
+    player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 0)
     asteroid_field = AsteroidField()
     
     while True:
