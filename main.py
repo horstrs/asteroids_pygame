@@ -1,4 +1,5 @@
 import pygame
+import sys
 from constants import *
 from player import Player
 from asteroid import Asteroid
@@ -10,12 +11,12 @@ def main():
     print(f"Screen height: {SCREEN_HEIGHT}")
     pygame.init()
 
-    updatable = pygame.sprite.Group()
-    drawable = pygame.sprite.Group()
-    asteroids = pygame.sprite.Group()
-    Player.containers = (updatable, drawable)
-    Asteroid.containers = (asteroids, updatable, drawable)
-    AsteroidField.containers = (updatable)
+    updatable_group = pygame.sprite.Group()
+    drawable_group = pygame.sprite.Group()
+    asteroids_group = pygame.sprite.Group()
+    Player.containers = (updatable_group, drawable_group)
+    Asteroid.containers = (asteroids_group, updatable_group, drawable_group)
+    AsteroidField.containers = (updatable_group)
     
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     clock = pygame.time.Clock()
@@ -29,9 +30,12 @@ def main():
             if event.type == pygame.QUIT:
                 return
         screen.fill(COLOR_BLACK)
-        for object in drawable:
+        for object in drawable_group:
             object.draw(screen)
-        updatable.update(delta_time)
+        updatable_group.update(delta_time)
+        for asteroid in asteroids_group:
+            if asteroid.collision_check(player):
+                sys.exit("Game Over!")
         pygame.display.flip()
         delta_time = clock.tick(60) / 1000
 
